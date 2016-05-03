@@ -1,0 +1,3 @@
+aqueleha_insert:
+    pattern:  /aqueleha_insert
+    defaults: { _controller: AqualehaAppBundle:Default:add}

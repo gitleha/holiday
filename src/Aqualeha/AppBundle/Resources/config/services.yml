@@ -1,0 +1,10 @@
+services:
+    aqualeha.app.holidaymanager:
+        class: Aqualeha\AppBundle\Services\HolidayManager
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: app.services }
+    aqualeha.app.calfileparser:
+        class: Aqualeha\AppBundle\Services\CalFileParser
+        tags:
+            - { name: app.services }

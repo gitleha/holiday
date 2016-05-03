@@ -1,0 +1,16 @@
+<h1>Holiday creation</h1>
+
+<form action="{{ path('aqueleha_new') }}" method="post" ENCTYPE="multipart/form-data">
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('aqueleha_home') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
