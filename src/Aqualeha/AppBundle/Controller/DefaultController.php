@@ -5,8 +5,6 @@ namespace Aqualeha\AppBundle\Controller;
 use Aqualeha\AppBundle\Entity\Country;
 use Aqualeha\AppBundle\Entity\Document;
 use Aqualeha\AppBundle\Entity\Holiday;
-use Aqualeha\AppBundle\Services\FileIcsManager;
-use Aqualeha\AppBundle\Form\HolidayType;
 use Aqualeha\AppBundle\Services\HolidayManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -39,12 +37,9 @@ class DefaultController extends Controller
      */
     public function newAction(Request $request)
     {
-        $entity = new Holiday();
-
         $document = new Document();
         $form = $this->createFormBuilder($document)
-            ->add('name')
-            ->add('file')
+            ->add('file', FileType::class, array('label' => 'Importer un calendrier (ICS file)'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -88,37 +83,9 @@ class DefaultController extends Controller
         }
 
         return array(
-            'entity' => $entity,
             'form'   => $form->createView()
         );
     }
-
-    /**
-     * Creates a new list of Holiday entity.
-     *
-     * @Route("/create", name="aqueleha_create")
-     * @Method("post")
-     * @Template("AqualehaAppBundle:Default:create.html.twig")
-     */
-   /* public function createAction(Request $request)
-    {
-        $entity = new Document();
-
-        $document = new Document();
-        $form = $this->createFormBuilder($document)
-            ->add('name')
-            ->add('file')
-            ->getForm();
-
-        $form->handleRequest($request);
-
-
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView()
-        );
-    }*/
 
     /**
      * @return \Aqualeha\AppBundle\Services\HolidayManager

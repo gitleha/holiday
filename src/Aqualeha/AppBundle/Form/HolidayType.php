@@ -11,7 +11,7 @@ class HolidayType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', FileType::class, array('label' => 'Importer un calendrier (ICS file)'))
+            ->add('name', FileType::class)
         ;
     }
 

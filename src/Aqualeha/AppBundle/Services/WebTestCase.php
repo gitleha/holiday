@@ -1,6 +1,6 @@
 <?php
 
-namespace Aqualeha\AppBundle\Tests;
+namespace Aqualeha\AppBundle\Services;
 
 use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\ORM\EntityManager;

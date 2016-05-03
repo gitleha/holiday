@@ -8,13 +8,11 @@
 
 namespace Aqualeha\AppBundle\Tests\Services;
 
+use Aqualeha\AppBundle\Services\WebTestCase;
 use Aqualeha\AppBundle\Entity\Country;
 use Aqualeha\AppBundle\Entity\Holiday;
-use Aqualeha\AppBundle\Tests\WebTestCase;
 use Aqualeha\AppBundle\Services\HolidayManager;
 use \Phake;
-require_once('/var/www/html/holidays/vendor/composer/phake/phake/src/Phake.php');
-
 
 /**
 * Class HolydayManagerTest
