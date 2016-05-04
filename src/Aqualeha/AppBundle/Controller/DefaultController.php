@@ -17,7 +17,11 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Persistence\ObjectManager;
 
-
+/**
+ * Class DefaultController
+ *
+ * @package Aqualeha\AppBundle\Controller
+ */
 class DefaultController extends Controller
 {
     /**
@@ -34,6 +38,9 @@ class DefaultController extends Controller
      *
      * @Route("/new", name="aqueleha_new")
      * @Template("AqualehaAppBundle:Default:create.html.twig")
+     *
+     * @param Request $request
+     * @return array
      */
     public function newAction(Request $request)
     {
@@ -59,7 +66,7 @@ class DefaultController extends Controller
 
             //If we don't know the country, we add it
             //Otherwise we continue
-            $countries = $this->getDoctrine()->getRepository('AqualehaAppBundle:Country')->findOneByName(substr($document->getFile()->getClientOriginalName(), 0,strpos($document->getFile()->getClientOriginalName(), '.')));
+            $countries = $this->getDoctrine()->getRepository('AqualehaAppBundle:Country')->findOneByName(substr($document->getFile()->getClientOriginalName(), 0, strpos($document->getFile()->getClientOriginalName(), '.')));
             if (count($countries) == 0) {
                 $country = new Country();
                 $country->setName(substr($document->getFile()->getClientOriginalName(), 0, strpos($document->getFile()->getClientOriginalName(), '.')));
@@ -69,7 +76,7 @@ class DefaultController extends Controller
             }
 
             //for each day in the array, we add a new holiday
-            foreach($data as $day) {
+            foreach ($data as $day) {
                 $holiday = new Holiday();
                 $holiday->setName($day['summary']);
                 $holiday->setDate($day['dtstart;value=date']);
