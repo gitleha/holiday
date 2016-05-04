@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="central_leha" default="build">
+<project name="holiday" default="build">
 
     <target name="build" depends="composer,phpunit_develop,phpcs,jdepend" />
-    <target name="jenkins_develop" depends="buildPrepare,clearLog,fixtures,composer,phpunit_develop,phpcpd,phpcs,jdepend" />
+    <target name="jenkins_develop" depends="buildPrepare,clearLog,fixtures,composer,phpunit_develop" />
     <target name="jenkins_master" depends="buildPrepare,schemaUpdate,clearLog,cacheClear,composer,asset,phpunit_develop" />
 
     <target name="composer">
