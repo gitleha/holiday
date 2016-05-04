@@ -109,15 +109,15 @@ class DefaultController extends Controller
      * Check if the day is a Holiday and give a new date.
      * We can add a number of day in addition like /checkHoliday/FRA/20160429/5 -> 20160504
      *
-     * @Route("/checkHoliday/{country}/{date}/{nbDay}", name="aqueleha_checkHolidayMore", defaults={"nbDay" = 0})
-     * @Method("get")
-     * @Template("AqualehaAppBundle:Default:date.html.twig")
-     *
      * @param string  $country
      * @param string  $date
      * @param integer $nbDay
      *
      * @return array
+     *
+     * @Route("/checkHoliday/{country}/{date}/{nbDay}", name="aqueleha_checkHolidayMore", defaults={"nbDay" = 0})
+     * @Method("get")
+     * @Template("AqualehaAppBundle:Default:date.html.twig")
      */
     public function checkHolidayMoreAction($country, $date, $nbDay)
     {

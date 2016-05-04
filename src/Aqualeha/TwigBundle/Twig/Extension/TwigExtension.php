@@ -11,17 +11,33 @@ namespace Aqualeha\TwigBundle\Twig\Extension;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
 
+/**
+ * Class TwigExtension
+ *
+ * @package Aqualeha\TwigBundle\Twig\Extension
+ */
 class TwigExtension extends \Twig_Extension {
+    /**
+     * @return string
+     */
     public function getName() {
         return 'aqualehatwigext';
     }
 
+    /**
+     * @return array
+     */
     public function getFilters() {
         return array(
             'color_inverse' => new \Twig_Filter_Method($this, 'invertColor'),
         );
     }
 
+    /**
+     * @param $color
+     *
+     * @return string
+     */
     public function invertColor($color) {
         $color = trim($color);
         $prependHash = false;
