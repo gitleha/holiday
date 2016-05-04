@@ -20,14 +20,16 @@ class TwigExtension extends \Twig_Extension {
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'aqualehatwigext';
     }
 
     /**
      * @return array
      */
-    public function getFilters() {
+    public function getFilters()
+    {
         return array(
             'color_inverse' => new \Twig_Filter_Method($this, 'invertColor'),
         );
@@ -38,7 +40,8 @@ class TwigExtension extends \Twig_Extension {
      *
      * @return string
      */
-    public function invertColor($color) {
+    public function invertColor($color)
+    {
         $color = trim($color);
         $prependHash = false;
 
@@ -53,7 +56,7 @@ class TwigExtension extends \Twig_Extension {
             case 6:
                 BREAK;
             default:
-                trigger_error("Invalid hex length ($len). Must be (3) or (6)", e_user_error);
+                trigger_error("Invalid hex length ($len). Must be (3) or (6)", E_USER_ERROR);
         }
 
         IF (!preg_match('/[a-f0-9]{6}/i', $color)) {
