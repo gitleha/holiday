@@ -37,9 +37,9 @@ class CalFileParser
     private $output = 'array';
 
     /**
-     * @var array $DTfields
+     * @var array $dtFields
      */
-    private $DTfields = array('dtstart', 'dtend', 'dtstamp', 'created', 'last-modified');
+    private $dtFields = array('dtstart', 'dtend', 'dtstamp', 'created', 'last-modified');
 
     /**
      * @var null $timezone
@@ -294,7 +294,7 @@ class CalFileParser
                     list($key, $value) = explode(':', $line, 2);
                     $key = strtolower(trim($key));
                     // autoconvert datetime fields to DateTime object
-                    if (in_array($key, $this->DTfields)) {
+                    if (in_array($key, $this->dtFields)) {
                         $dtStr = str_replace(array('T', 'Z'), array('', ''), $value);
                         $format = 'Ymdhis';
 
