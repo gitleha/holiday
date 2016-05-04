@@ -16,7 +16,8 @@ use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
  *
  * @package Aqualeha\TwigBundle\Twig\Extension
  */
-class TwigExtension extends \Twig_Extension {
+class TwigExtension extends \Twig_Extension
+{
     /**
      * @return string
      */
@@ -36,7 +37,7 @@ class TwigExtension extends \Twig_Extension {
     }
 
     /**
-     * @param $color
+     * @param string $color
      *
      * @return string
      */
@@ -59,9 +60,9 @@ class TwigExtension extends \Twig_Extension {
                 trigger_error("Invalid hex length ($len). Must be (3) or (6)", E_USER_ERROR);
         }
 
-        IF (!preg_match('/[a-f0-9]{6}/i', $color)) {
+        if (!preg_match('/[a-f0-9]{6}/i', $color)) {
             $color = htmlentities($color);
-            trigger_error("Invalid hex string #$color", e_user_error);
+            trigger_error("Invalid hex string #$color", E_USER_ERROR);
         }
 
         $r = dechex(255 - hexdec(substr($color, 0, 2)));
