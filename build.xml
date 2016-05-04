@@ -12,7 +12,7 @@
     </target>
 
     <target name="buildPrepare">
-        <copy file="app/config/parameters.ini.dist" tofile="app/config/parameters.yml" overwrite="true">
+        <copy file="app/config/parameters.yml.dist" tofile="app/config/parameters.yml" overwrite="true">
             <filterchain>
                 <replacetokens>
                     <token key="database_name" value="${db_name}" />
@@ -33,7 +33,7 @@
 
     <target name="cacheClear">
         <exec executable="php">
-            <arg value="app/console" />
+            <arg value="bin/console" />
             <arg value="cache:clear" />
             <arg value="--env=prod" />
         </exec>
@@ -41,15 +41,15 @@
 
     <target name="clearLog">
         <exec executable="rm">
-            <arg value="app/logs/dev.log" />
-            <arg value="app/logs/doctrine.log" />
-            <arg value="app/logs/test.log" />
+            <arg value="var/logs/dev.log" />
+            <arg value="var/logs/doctrine.log" />
+            <arg value="var/logs/test.log" />
         </exec>
     </target>
 
     <target name="schemaUpdate">
         <exec executable="php">
-            <arg value="app/console" />
+            <arg value="bin/console" />
             <arg value="doctrine:schema:update" />
             <arg line="--force" />
         </exec>
@@ -57,12 +57,12 @@
 
     <target name="fixtures">
         <exec executable="php">
-            <arg value="app/console" />
+            <arg value="bin/console" />
             <arg value="doctrine:schema:update" />
             <arg line="--force" />
         </exec>
         <exec executable="php">
-            <arg value="app/console" />
+            <arg value="bin/console" />
             <arg value="doctrine:fixture:load" />
         </exec>
     </target>
@@ -81,7 +81,7 @@
 
     <target name="asset" description="Run assetic">
         <exec executable="php">
-            <arg value="app/console" />
+            <arg value="bin/console" />
             <arg value="assetic:dump" />
             <arg value="--env=prod" />
         </exec>
