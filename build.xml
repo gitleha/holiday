@@ -42,8 +42,6 @@
     <target name="clearLog">
         <exec executable="rm">
             <arg value="var/logs/dev.log" />
-            <arg value="var/logs/doctrine.log" />
-            <arg value="var/logs/test.log" />
         </exec>
     </target>
 
