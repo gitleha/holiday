@@ -42,6 +42,7 @@ class DefaultController extends Controller
      * @Template("AqualehaAppBundle:Default:create.html.twig")
      *
      * @param Request $request
+     *
      * @return array
      */
     public function newAction(Request $request)
