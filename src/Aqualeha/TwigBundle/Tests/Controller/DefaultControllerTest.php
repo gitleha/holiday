@@ -4,8 +4,16 @@ namespace Aqualeha\TwigBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class DefaultControllerTest
+ *
+ * @package Aqualeha\TwigBundle\Tests\Controller
+ */
 class DefaultControllerTest extends WebTestCase
 {
+    /**
+     * Test Hello
+     */
     public function testIndex()
     {
         $client = static::createClient();
