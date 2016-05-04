@@ -18,7 +18,13 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class HolidayManager {
+/**
+ * Class HolidayManager
+ *
+ * @package Aqualeha\AppBundle\Services
+ */
+class HolidayManager
+{
     /**
      * @var EntityManager $em
      */
@@ -42,9 +48,9 @@ class HolidayManager {
     /**
      * Check the date and update it if this one is a week end day or a holiday
      *
-     * @param string $day
-     * @param int $nbDay
-     * @param string $country
+     * @param string  $day
+     * @param integer $nbDay
+     * @param string  $country
      *
      * @return array
      */
@@ -103,5 +109,3 @@ class HolidayManager {
         }
     }
 }
-
-?>
