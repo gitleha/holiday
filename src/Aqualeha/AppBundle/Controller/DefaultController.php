@@ -27,6 +27,8 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="aqueleha_home")
      * @Template("AqualehaAppBundle:Default:index.html.twig")
+     *
+     * @return array
      */
     public function indexAction()
     {
@@ -109,6 +111,12 @@ class DefaultController extends Controller
      * @Route("/checkHoliday/{country}/{date}/{nbDay}", name="aqueleha_checkHolidayMore", defaults={"nbDay" = 0})
      * @Method("get")
      * @Template("AqualehaAppBundle:Default:date.html.twig")
+     *
+     * @param string  $country
+     * @param string  $date
+     * @param integer $nbDay
+     *
+     * @return array
      */
     public function checkHolidayMoreAction($country, $date, $nbDay)
     {
