@@ -27,30 +27,57 @@ class CalFileParser
     private $DTfields = array('dtstart', 'dtend', 'dtstamp', 'created', 'last-modified');
     private $timezone = null;
 
+    /**
+     * Init CalFileParser
+     */
     function __construct() {
         $this->_default_output = $this->_output;
     }
+
+    /**
+     * @param string $path
+     */
     public function set_base_path($path) {
         if (isset($path)) {
             $this->_base_path = $path;
         }
     }
+
+    /**
+     * @param string $filename
+     */
     public function set_file_name($filename) {
         if (!empty($filename)) {
             $this->_file_name = $filename;
         }
     }
+
+    /**
+     * @param string $output
+     */
     public function set_output($output) {
         if (!empty($output)) {
             $this->_output = $output;
         }
     }
+
+    /**
+     * @return string
+     */
     public function get_base_path() {
         return $this->_base_path;
     }
+
+    /**
+     * @return string
+     */
     public function get_file_name() {
         return $this->_file_name;
     }
+
+    /**
+     * @return string
+     */
     public function get_output() {
         return $this->_output;
     }
@@ -58,6 +85,7 @@ class CalFileParser
      * Read File
      *
      * @param string $file
+     *
      * @return string
      *
      * @example
@@ -89,7 +117,9 @@ class CalFileParser
     }
     /**
      * Read Remote File
-     * @param $file
+     *
+     * @param string $file
+     *
      * @return bool|string
      */
     public function read_remote_file($file) {
@@ -105,8 +135,10 @@ class CalFileParser
     /**
      * Parse
      * Parses iCal or vCal file and returns data of a type that is specified
+     *
      * @param string $file
      * @param string $output
+     *
      * @return mixed|string
      */
     public function parse($file = '', $output = '') {
@@ -134,7 +166,7 @@ class CalFileParser
         if (!empty($events)) {
             foreach ($events[0] as $event_str) {
                 //remove begin and end "tags"
-                $event_str = trim(str_replace(array('BEGIN:VEVENT','END:VEVENT'),'',$event_str));
+                $event_str = trim(str_replace(array('BEGIN:VEVENT', 'END:VEVENT'), '', $event_str));
                 //convert string of entire event into an array with elements containing string of 'key:value'
                 $event_key_pairs = $this->convert_event_string_to_array($event_str);
                 //convert array of 'key:value' strings to an array of key => values
@@ -149,8 +181,9 @@ class CalFileParser
      * Output
      * outputs data in the format specified
      *
-     * @param $events_arr
+     * @param mixed  $events_arr
      * @param string $output
+     *
      * @return mixed
      */
     private function output($events_arr, $output = 'array') {
@@ -173,32 +206,32 @@ class CalFileParser
     private function convert_event_string_to_array($event_str = '') {
         if (!empty($event_str)) {
             //replace new lines with a custom delimiter
-            $event_str = preg_replace("/[\r\n]/", "%%" ,$event_str);
+            $event_str = preg_replace("/[\r\n]/", "%%", $event_str);
             if (strpos(substr($event_str, 2), '%%') == '0') {
                 //if this code is executed, then file consisted of one line causing previous tactic to fail
-                $tmp_piece = explode(':',$event_str);
+                $tmp_piece = explode(':', $event_str);
                 $num_pieces = count($tmp_piece);
                 $event_str = '';
                 foreach ($tmp_piece as $key => $item_str) {
                     if ($key != ($num_pieces -1) ) {
                         //split at spaces
-                        $tmp_pieces = preg_split('/\s/',$item_str);
+                        $tmp_pieces = preg_split('/\s/', $item_str);
                         //get the last whole word in the string [item]
                         $last_word = end($tmp_pieces);
                         //adds delimiter to front and back of item string, and also between each new key
-                        $item_str = trim(str_replace(array($last_word,' %%' . $last_word),array('%%' . $last_word . ':', '%%' . $last_word), $item_str));
+                        $item_str = trim(str_replace(array($last_word, ' %%'.$last_word), array('%%'.$last_word.':', '%%'.$last_word), $item_str));
                     }
                     //build the event string back together, piece by piece
                     $event_str .= trim($item_str);
                 }
             }
             //perform some house cleaning just in case
-            $event_str = str_replace('%%%%','%%', $event_str);
+            $event_str = str_replace('%%%%', '%%', $event_str);
             if (substr($event_str, 0, 2) == '%%') {
                 $event_str = substr($event_str, 2);
             }
             //break string into array elements at custom delimiter
-            $return = explode('%%',$event_str);
+            $return = explode('%%', $event_str);
         } else {
             $return = array();
         }
