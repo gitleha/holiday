@@ -22,19 +22,19 @@ use DateTime;
 class CalFileParser
 {
     /**
-     * @var string $_base_path
+     * @var string $basePath
      */
-    private $_base_path = './';
+    private $basePath = './';
 
     /**
-     * @var string $_file_name
+     * @var string $fileName
      */
-    private $_file_name = '';
+    private $fileName = '';
 
     /**
-     * @var string $_output
+     * @var string $output
      */
-    private $_output = 'array';
+    private $output = 'array';
 
     /**
      * @var array $DTfields
@@ -51,61 +51,61 @@ class CalFileParser
      */
     public function __construct()
     {
-        $this->_default_output = $this->_output;
+        $this->defaultOuput = $this->output;
     }
 
     /**
      * @param string $path
      */
-    public function set_base_path($path)
+    public function setBasePath($path)
     {
         if (isset($path)) {
-            $this->_base_path = $path;
+            $this->basePath = $path;
         }
     }
 
     /**
      * @param string $filename
      */
-    public function set_file_name($filename)
+    public function setFileName($filename)
     {
         if (!empty($filename)) {
-            $this->_file_name = $filename;
+            $this->fileName = $filename;
         }
     }
 
     /**
      * @param string $output
      */
-    public function set_output($output)
+    public function setOutput($output)
     {
         if (!empty($output)) {
-            $this->_output = $output;
+            $this->output = $output;
         }
     }
 
     /**
      * @return string
      */
-    public function get_base_path()
+    public function getBasePath()
     {
-        return $this->_base_path;
+        return $this->basePath;
     }
 
     /**
      * @return string
      */
-    public function get_file_name()
+    public function getFileName()
     {
-        return $this->_file_name;
+        return $this->fileName;
     }
 
     /**
      * @return string
      */
-    public function get_output()
+    public function getOutput()
     {
-        return $this->_output;
+        return $this->output;
     }
     /**
      * Read File
@@ -115,29 +115,29 @@ class CalFileParser
      * @return string
      *
      * @example
-     *  read_file('schedule.vcal')
-     *  read_file('../2011-08/'schedule.vcal');
-     *  read_file('http://michaelencode.com/example.vcal');
+     *  readFile('schedule.vcal')
+     *  readFile('../2011-08/'schedule.vcal');
+     *  readFile('http://michaelencode.com/example.vcal');
      */
-    public function read_file($file = '')
+    public function readFile($file = '')
     {
         if (empty($file)) {
-            $file = $this->_file_name;
+            $file = $this->fileName;
         }
         // check to see if file path is a url
         if (preg_match('/^(http|https):/', $file) === 1) {
-            return $this->read_remote_file($file);
+            return $this->readRemoteFile($file);
         }
 
         //empty base path if file starts with forward-slash
         if (substr($file, 0, 1) === '/') {
-            $this->set_base_path('');
+            $this->setBasePath('');
         }
 
-        if (!empty($file) && file_exists($this->_base_path . $file)) {
-            $file_contents = file_get_contents($this->_base_path . $file);
+        if (!empty($file) && file_exists($this->basePath . $file)) {
+            $fileContents = file_get_contents($this->basePath . $file);
 
-            return $file_contents;
+            return $fileContents;
         } else {
             return false;
         }
@@ -149,7 +149,7 @@ class CalFileParser
      *
      * @return bool|string
      */
-    public function read_remote_file($file)
+    public function readRemoteFile($file)
     {
         if (!empty($file)) {
             $data = file_get_contents($file);
@@ -171,19 +171,19 @@ class CalFileParser
      */
     public function parse($file = '', $output = '')
     {
-        $file_contents = $this->read_file($file);
-        if ($file_contents === false) {
+        $fileContents = $this->readFile($file);
+        if ($fileContents === false) {
             return 'Error: File Could not be read';
         }
         if (empty($output)) {
-            $output = $this->_output;
+            $output = $this->output;
         }
         if (empty($output)) {
-            $output = $this->_default_output;
+            $output = $this->defaultOuput;
         }
-        $events_arr = array();
+        $eventsArr = array();
         // fetch timezone to create datetime object
-        if (preg_match('/X-WR-TIMEZONE:(.+)/i', $file_contents, $timezone) === 1) {
+        if (preg_match('/X-WR-TIMEZONE:(.+)/i', $fileContents, $timezone) === 1) {
             $date = new DateTime();
             $date->createFromFormat('e', trim($timezone[1]));
             if ($date !== false) {
@@ -191,81 +191,81 @@ class CalFileParser
             }
         }
         //put contains between start and end of VEVENT into array called $events
-        preg_match_all('/(BEGIN:VEVENT.*?END:VEVENT)/si', $file_contents, $events);
+        preg_match_all('/(BEGIN:VEVENT.*?END:VEVENT)/si', $fileContents, $events);
         if (!empty($events)) {
-            foreach ($events[0] as $event_str) {
+            foreach ($events[0] as $eventStr) {
                 //remove begin and end "tags"
-                $event_str = trim(str_replace(array('BEGIN:VEVENT', 'END:VEVENT'), '', $event_str));
+                $eventStr = trim(str_replace(array('BEGIN:VEVENT', 'END:VEVENT'), '', $eventStr));
                 //convert string of entire event into an array with elements containing string of 'key:value'
-                $event_key_pairs = $this->convert_event_string_to_array($event_str);
+                $eventKeyPairs = $this->convertEventStringToArray($eventStr);
                 //convert array of 'key:value' strings to an array of key => values
-                $events_arr[] = $this->convert_key_value_strings($event_key_pairs);
+                $eventsArr[] = $this->convertKeyValueStrings($eventKeyPairs);
             }
         }
-        $this->_output = $this->_default_output;
+        $this->output = $this->defaultOuput;
 
-        return $this->output($events_arr, $output);
+        return $this->output($eventsArr, $output);
     }
     /**
      * Output
      * outputs data in the format specified
      *
-     * @param mixed  $events_arr
+     * @param mixed  $eventsArr
      *
      * @param string $output
      *
      * @return mixed
      */
-    private function output($events_arr, $output = 'array')
+    private function output($eventsArr, $output = 'array')
     {
         switch ($output) {
             case 'json' :
-                return json_encode($events_arr);
+                return json_encode($eventsArr);
                 break;
             default :
-                return $events_arr;
+                return $eventsArr;
                 break;
         }
     }
     /**
      * Convert event string to array
      * accepts a string of calendar event data and produces array of 'key:value' strings
-     * See convert_key_value_strings() to convert strings to
+     * See convertKeyValueStrings() to convert strings to
      *
-     * @param string $event_str
+     * @param string $eventStr
      *
      * @return array
      */
-    private function convert_event_string_to_array($event_str = '')
+    private function convertEventStringToArray($eventStr = '')
     {
-        if (!empty($event_str)) {
+        if (!empty($eventStr)) {
             //replace new lines with a custom delimiter
-            $event_str = preg_replace("/[\r\n]/", "%%", $event_str);
-            if (strpos(substr($event_str, 2), '%%') == '0') {
+            $eventStr = preg_replace("/[\r\n]/", "%%", $eventStr);
+            if (strpos(substr($eventStr, 2), '%%') == '0') {
                 //if this code is executed, then file consisted of one line causing previous tactic to fail
-                $tmp_piece = explode(':', $event_str);
-                $num_pieces = count($tmp_piece);
-                $event_str = '';
-                foreach ($tmp_piece as $key => $item_str) {
-                    if ($key != ($num_pieces -1) ) {
+                $tmpPiece = explode(':', $eventStr);
+                $numPieces = count($tmpPiece);
+                $eventStr = '';
+                foreach ($tmpPiece as $key => $itemStr) {
+                    if ($key != ($numPieces -1) ) {
                         //split at spaces
-                        $tmp_pieces = preg_split('/\s/', $item_str);
+                        $tmpPieces = preg_split('/\s/', $itemStr);
                         //get the last whole word in the string [item]
-                        $last_word = end($tmp_pieces);
+                        $lastWord = end($tmpPieces);
                         //adds delimiter to front and back of item string, and also between each new key
-                        $item_str = trim(str_replace(array($last_word, ' %%'.$last_word), array('%%'.$last_word.':', '%%'.$last_word), $item_str));
+                        $itemStr = trim(str_replace(array($lastWord, ' %%'.$lastWord), array('%%'.$lastWord.':', '%%'.$lastWord), $itemStr));
                     }
                     //build the event string back together, piece by piece
-                    $event_str .= trim($item_str);
+                    $eventStr .= trim($itemStr);
                 }
             }
             //perform some house cleaning just in case
-            $event_str = str_replace('%%%%', '%%', $event_str);
-            if (substr($event_str, 0, 2) == '%%') {
-                $event_str = substr($event_str, 2);
+            $eventStr = str_replace('%%%%', '%%', $eventStr);
+            if (substr($eventStr, 0, 2) == '%%') {
+                $eventStr = substr($eventStr, 2);
             }
             //break string into array elements at custom delimiter
-            $return = explode('%%', $event_str);
+            $return = explode('%%', $eventStr);
         } else {
             $return = array();
         }
@@ -276,15 +276,15 @@ class CalFileParser
      * Parse Key Value String
      * accepts an array of strings in the format of 'key:value' and returns an array of keys and values
      *
-     * @param array $event_key_pairs
+     * @param array $eventKeyPairs
      *
      * @return array
      */
-    private function convert_key_value_strings($event_key_pairs = array())
+    private function convertKeyValueStrings($eventKeyPairs = array())
     {
         $event = array();
-        if (!empty($event_key_pairs)) {
-            foreach ($event_key_pairs as $line) {
+        if (!empty($eventKeyPairs)) {
+            foreach ($eventKeyPairs as $line) {
                 if (empty($line)) {
                     continue;
                 }
@@ -295,11 +295,11 @@ class CalFileParser
                     $key = strtolower(trim($key));
                     // autoconvert datetime fields to DateTime object
                     if (in_array($key, $this->DTfields)) {
-                        $dt_str = str_replace(array('T', 'Z'), array('', ''), $value);
+                        $dtStr = str_replace(array('T', 'Z'), array('', ''), $value);
                         $format = 'Ymdhis';
 
                         $date = new DateTime();
-                        $date->createFromFormat($format, $dt_str);
+                        $date->createFromFormat($format, $dtStr);
 
                         if ($date !== false) {
                             $value = $date;
@@ -317,12 +317,12 @@ class CalFileParser
 
     /**
      * @param int  $time
-     * @param bool $incl_time
+     * @param bool $inclTime
      *
      * @return bool|string
      */
-    public function getIcalDate($time, $incl_time = true)
+    public function getIcalDate($time, $inclTime = true)
     {
-        return $incl_time ? date('Ymd\THis', $time) : date('Ymd', $time);
+        return $inclTime ? date('Ymd\THis', $time) : date('Ymd', $time);
     }
 }
