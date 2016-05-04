@@ -17,4 +17,18 @@ parameters:
     mailer_password:   ~
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    locale:            @locale@    
+    secret:            @secret@
+
+    shared_folder:     /media/shared_central_leha
+    upload_dir:         /web/uploads
+    limit_per_page_notification:     10
+    path_root_exception:    @path_root_exception@
+
+    router.request_context.host: @router.request_context.host@
+    router.request_context.scheme: @router.request_context.scheme@
+    router.request_context.base_url:
+
+    delivery_address: @delivery_address@
+
+    jasper.jasper_starter: @jasper.jasper_starter@
