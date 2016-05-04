@@ -25,9 +25,9 @@ parameters:
     limit_per_page_notification:     10
     path_root_exception:    '@path_root_exception@'
 
-    router.request_context.host: '@router.request_context.host@'
-    router.request_context.scheme: '@router.request_context.scheme@'
-    router.request_context.base_url:'@router.request_context.base_url@'
+    router.request_context.host:     '@router.request_context.host@'
+    router.request_context.scheme:   '@router.request_context.scheme@'
+    router.request_context.base_url: '@router.request_context.base_url@'
 
     delivery_address: '@delivery_address@'
 
