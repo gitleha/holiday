@@ -18,7 +18,8 @@ use Symfony\Component\Form\DataTransformerInterface;
  *
  * @author  Sylvain Davenel
  */
-class DateTimeTransformer implements DataTransformerInterface {
+class DateTimeTransformer implements DataTransformerInterface
+{
     /**
      * tranform function
      *
