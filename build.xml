@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="central_leha" default="build">
+
+    <target name="build" depends="composer,phpunit_develop,phpcs,pdepend" />
+    <target name="jenkins_develop" depends="buildPrepare,clearLog,fixtures,composer,phpunit_develop,phpcpd,phpcs,pdepend" />
+    <target name="jenkins_master" depends="buildPrepare,schemaUpdate,clearLog,cacheClear,composer,asset" />
+
+    <target name="composer">
+        <exec executable="composer" failonerror="true">
+            <arg value="install" />
+        </exec>
+    </target>
+
+    <target name="buildPrepare">
+        <copy file="app/config/parameters.ini.dist" tofile="app/config/parameters.yml" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="database_name" value="${db_name}" />
+                    <token key="database_user" value="${db_user}" />
+                    <token key="database_password" value="${db_passwd}" />
+                    <token key="secret" value="${secret}" />
+                    <token key="locale" value="${locale}" />
+                    <token key="delivery_address" value="${delivery_address}" />
+                    <token key="path_root_exception" value="${path_root_exception}" />
+                    <token key="jasper.jasper_starter" value="${jasper.jasper_starter}" />
+                    <token key="router.request_context.host" value="${router.request_context.host}" />
+                    <token key="router.request_context.scheme" value="${router.request_context.scheme}" />
+                    <token key="router.request_context.base_url" value="${router.request_context.base_url}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="cacheClear">
+        <exec executable="php">
+            <arg value="app/console" />
+            <arg value="cache:clear" />
+            <arg value="--env=prod" />
+        </exec>
+    </target>
+
+    <target name="clearLog">
+        <exec executable="rm">
+            <arg value="app/logs/dev.log" />
+            <arg value="app/logs/doctrine.log" />
+            <arg value="app/logs/test.log" />
+        </exec>
+    </target>
+
+    <target name="schemaUpdate">
+        <exec executable="php">
+            <arg value="app/console" />
+            <arg value="doctrine:schema:update" />
+            <arg line="--force" />
+        </exec>
+    </target>
+
+    <target name="fixtures">
+        <exec executable="php">
+            <arg value="app/console" />
+            <arg value="doctrine:schema:update" />
+            <arg line="--force" />
+        </exec>
+        <exec executable="php">
+            <arg value="app/console" />
+            <arg value="doctrine:fixture:load" />
+        </exec>
+    </target>
+
+    <target name="phpunit_develop" description="Run unit tests with PHPUnit">
+        <exec executable="phpunit" failonerror="false">
+            <arg value="-c"/>
+            <arg value="app/"/>
+            <arg value="--log-junit"/>
+            <arg value="build/phpunit.xml"/>
+            <arg line="--coverage-clover build/clover.xml"/>
+            <arg line="--coverage-html build/coverage" />
+            <arg line="--stop-on-error" />
+        </exec>
+    </target>
+
+    <target name="asset" description="Run assetic">
+        <exec executable="php">
+            <arg value="app/console" />
+            <arg value="assetic:dump" />
+            <arg value="--env=prod" />
+        </exec>
+    </target>
+
+    <target name="phpcs" description="Check syntax">
+        <exec executable="phpcs" failonerror="false">
+            <arg value="--report=checkstyle"/>
+            <arg value="--report-file=build/phpcs.xml" />
+            <arg value="--standard=Symfony2" />
+            <arg value="src" />
+        </exec>
+    </target>
+
+    <target name="phpcpd" description="Check duplicate code">
+        <exec executable="phpcpd" failonerror="false">
+            <arg value="--log-pmd" />
+            <arg value="build/pmd-cpd.xml" />
+            <arg value="src" />
+        </exec>
+    </target>
+
+    <target name="pdepend" description="Analyse de la structure de classes">
+        <exec executable="pdepend" failonerror="false">
+            <arg value="--jdepend-xml=build/jdepend.xml"/>
+            <arg value="--jdepend-chart=build/jdepend-chart.svg"/>
+            <arg value="--overview-pyramid=build/pyramid.svg"/>
+            <arg value="src" />
+        </exec>
+    </target>
+</project>
