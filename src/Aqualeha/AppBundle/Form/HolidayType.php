@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class HolidayType
+ *
  * @package Aqualeha\AppBundle\Form
  */
 class HolidayType extends AbstractType

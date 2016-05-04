@@ -16,7 +16,7 @@ use Symfony\Component\Form\DataTransformerInterface;
  *
  * @package Leha\CommonBundle\Form\DataTransformer
  *
- * @author  Sylvain Davenel
+ * @author  Sylvain Davenel <sdavenel@aqualeha.fr>
  */
 class DateTimeTransformer implements DataTransformerInterface
 {
@@ -32,7 +32,8 @@ class DateTimeTransformer implements DataTransformerInterface
         if (isset($date)) {
             //Si la date n'est pas vide on la transforme en string
             $datetoString = $date->format('Ymd');
-        } else { //Sinon on renvoie une chaine vide
+        } else {
+            //Sinon on renvoie une chaine vide
             $datetoString = "";
         }
 
