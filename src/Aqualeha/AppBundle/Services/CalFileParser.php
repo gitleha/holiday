@@ -21,16 +21,35 @@ use DateTime;
  */
 class CalFileParser
 {
+    /**
+     * @var string $_base_path
+     */
     private $_base_path = './';
+
+    /**
+     * @var string $_file_name
+     */
     private $_file_name = '';
+
+    /**
+     * @var string $_output
+     */
     private $_output = 'array';
+
+    /**
+     * @var array $DTfields
+     */
     private $DTfields = array('dtstart', 'dtend', 'dtstamp', 'created', 'last-modified');
+
+    /**
+     * @var null $timezone
+     */
     private $timezone = null;
 
     /**
      * Init CalFileParser
      */
-    function __construct()
+    public function __construct()
     {
         $this->_default_output = $this->_output;
     }
@@ -302,7 +321,7 @@ class CalFileParser
      *
      * @return bool|string
      */
-    function getIcalDate($time, $incl_time = true)
+    public function getIcalDate($time, $incl_time = true)
     {
         return $incl_time ? date('Ymd\THis', $time) : date('Ymd', $time);
     }
