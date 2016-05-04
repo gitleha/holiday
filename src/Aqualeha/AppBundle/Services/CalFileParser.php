@@ -14,7 +14,13 @@ namespace Aqualeha\AppBundle\Services;
 
 use DateTime;
 
-class CalFileParser {
+/**
+ * Class CalFileParser
+ *
+ * @package Aqualeha\AppBundle\Services
+ */
+class CalFileParser
+{
     private $_base_path = './';
     private $_file_name = '';
     private $_output = 'array';
@@ -75,6 +81,7 @@ class CalFileParser {
 
         if (!empty($file) && file_exists($this->_base_path . $file)) {
             $file_contents = file_get_contents($this->_base_path . $file);
+
             return $file_contents;
         } else {
             return false;
@@ -92,6 +99,7 @@ class CalFileParser {
                 return $data;
             }
         }
+
         return false;
     }
     /**
@@ -134,6 +142,7 @@ class CalFileParser {
             }
         }
         $this->_output = $this->_default_output;
+
         return $this->output($events_arr, $output);
     }
     /**
@@ -165,7 +174,8 @@ class CalFileParser {
         if (!empty($event_str)) {
             //replace new lines with a custom delimiter
             $event_str = preg_replace("/[\r\n]/", "%%" ,$event_str);
-            if (strpos(substr($event_str, 2), '%%') == '0') { //if this code is executed, then file consisted of one line causing previous tactic to fail
+            if (strpos(substr($event_str, 2), '%%') == '0') {
+                //if this code is executed, then file consisted of one line causing previous tactic to fail
                 $tmp_piece = explode(':',$event_str);
                 $num_pieces = count($tmp_piece);
                 $event_str = '';
@@ -192,12 +202,15 @@ class CalFileParser {
         } else {
             $return = array();
         }
+
         return $return;
     }
     /**
      * Parse Key Value String
      * accepts an array of strings in the format of 'key:value' and returns an array of keys and values
+     *
      * @param array $event_key_pairs
+     *
      * @return array
      */
     private function convert_key_value_strings($event_key_pairs = array()) {
