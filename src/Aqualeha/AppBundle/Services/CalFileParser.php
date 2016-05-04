@@ -30,14 +30,16 @@ class CalFileParser
     /**
      * Init CalFileParser
      */
-    function __construct() {
+    function __construct()
+    {
         $this->_default_output = $this->_output;
     }
 
     /**
      * @param string $path
      */
-    public function set_base_path($path) {
+    public function set_base_path($path)
+    {
         if (isset($path)) {
             $this->_base_path = $path;
         }
@@ -46,7 +48,8 @@ class CalFileParser
     /**
      * @param string $filename
      */
-    public function set_file_name($filename) {
+    public function set_file_name($filename)
+    {
         if (!empty($filename)) {
             $this->_file_name = $filename;
         }
@@ -55,7 +58,8 @@ class CalFileParser
     /**
      * @param string $output
      */
-    public function set_output($output) {
+    public function set_output($output)
+    {
         if (!empty($output)) {
             $this->_output = $output;
         }
@@ -64,21 +68,24 @@ class CalFileParser
     /**
      * @return string
      */
-    public function get_base_path() {
+    public function get_base_path()
+    {
         return $this->_base_path;
     }
 
     /**
      * @return string
      */
-    public function get_file_name() {
+    public function get_file_name()
+    {
         return $this->_file_name;
     }
 
     /**
      * @return string
      */
-    public function get_output() {
+    public function get_output()
+    {
         return $this->_output;
     }
     /**
@@ -93,7 +100,8 @@ class CalFileParser
      *  read_file('../2011-08/'schedule.vcal');
      *  read_file('http://michaelencode.com/example.vcal');
      */
-    public function read_file($file = '') {
+    public function read_file($file = '')
+    {
         if (empty($file)) {
             $file = $this->_file_name;
         }
@@ -122,7 +130,8 @@ class CalFileParser
      *
      * @return bool|string
      */
-    public function read_remote_file($file) {
+    public function read_remote_file($file)
+    {
         if (!empty($file)) {
             $data = file_get_contents($file);
             if ($data !== false) {
@@ -141,7 +150,8 @@ class CalFileParser
      *
      * @return mixed|string
      */
-    public function parse($file = '', $output = '') {
+    public function parse($file = '', $output = '')
+    {
         $file_contents = $this->read_file($file);
         if ($file_contents === false) {
             return 'Error: File Could not be read';
@@ -182,11 +192,13 @@ class CalFileParser
      * outputs data in the format specified
      *
      * @param mixed  $events_arr
+     *
      * @param string $output
      *
      * @return mixed
      */
-    private function output($events_arr, $output = 'array') {
+    private function output($events_arr, $output = 'array')
+    {
         switch ($output) {
             case 'json' :
                 return json_encode($events_arr);
@@ -200,10 +212,13 @@ class CalFileParser
      * Convert event string to array
      * accepts a string of calendar event data and produces array of 'key:value' strings
      * See convert_key_value_strings() to convert strings to
+     *
      * @param string $event_str
+     *
      * @return array
      */
-    private function convert_event_string_to_array($event_str = '') {
+    private function convert_event_string_to_array($event_str = '')
+    {
         if (!empty($event_str)) {
             //replace new lines with a custom delimiter
             $event_str = preg_replace("/[\r\n]/", "%%", $event_str);
@@ -246,7 +261,8 @@ class CalFileParser
      *
      * @return array
      */
-    private function convert_key_value_strings($event_key_pairs = array()) {
+    private function convert_key_value_strings($event_key_pairs = array())
+    {
         $event = array();
         if (!empty($event_key_pairs)) {
             foreach ($event_key_pairs as $line) {
@@ -280,6 +296,12 @@ class CalFileParser
         }, $event);
     }
 
+    /**
+     * @param int  $time
+     * @param bool $incl_time
+     *
+     * @return bool|string
+     */
     function getIcalDate($time, $incl_time = true)
     {
         return $incl_time ? date('Ymd\THis', $time) : date('Ymd', $time);
