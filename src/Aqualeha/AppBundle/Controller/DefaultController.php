@@ -38,12 +38,12 @@ class DefaultController extends Controller
     /**
      * Creates a new list of Holiday entity.
      *
-     * @Route("/new", name="aqueleha_new")
-     * @Template("AqualehaAppBundle:Default:create.html.twig")
-     *
      * @param Request $request
      *
      * @return array
+     *
+     * @Route("/new", name="aqueleha_new")
+     * @Template("AqualehaAppBundle:Default:create.html.twig")
      */
     public function newAction(Request $request)
     {
