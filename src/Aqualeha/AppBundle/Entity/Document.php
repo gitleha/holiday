@@ -6,6 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Class Document
+ *
+ * @package Aqualeha\AppBundle\Entity
+ */
 class Document
 {
     public $id;
@@ -19,6 +24,9 @@ class Document
      */
     private $file;
 
+    /**
+     * @return null|string
+     */
     public function getAbsolutePath()
     {
         return null === $this->path
@@ -26,6 +34,9 @@ class Document
             : $this->getUploadRootDir().'/'.$this->path;
     }
 
+    /**
+     * @return null|string
+     */
     public function getWebPath()
     {
         return null === $this->path
@@ -33,6 +44,9 @@ class Document
             : $this->getUploadDir().'/'.$this->path;
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded
@@ -40,6 +54,9 @@ class Document
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up

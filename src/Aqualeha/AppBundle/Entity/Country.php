@@ -83,6 +83,9 @@ class Country
         return $this->holidays;
     }
 
+    /**
+     * Init Country
+     */
     public function __construct()
     {
         $this->holidays = new ArrayCollection();
