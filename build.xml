@@ -89,7 +89,7 @@
         <exec executable="phpcs" failonerror="false">
             <arg value="--report=checkstyle"/>
             <arg value="--report-file=build/phpcs.xml" />
-            <arg value="--standard=Symfony2" />
+            <arg value="--standard=Symfony3" />
             <arg value="src" />
         </exec>
     </target>
