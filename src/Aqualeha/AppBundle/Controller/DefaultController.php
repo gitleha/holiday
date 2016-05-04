@@ -48,8 +48,7 @@ class DefaultController extends Controller
     public function newAction(Request $request)
     {
         $document = new Document();
-        $form = $this->createFormBuilder($document)
-            ->add('file', FileType::class, array('label' => 'Importer un calendrier (ICS file)'))->getForm();
+        $form = $this->createFormBuilder($document)->add('file', FileType::class, array('label' => 'Importer un calendrier (ICS file)'))->getForm();
 
         $form->handleRequest($request);
 

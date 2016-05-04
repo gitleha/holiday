@@ -19,9 +19,7 @@ class HolidayType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', FileType::class)
-        ;
+        $builder->add('name', FileType::class);
     }
 
     /**
