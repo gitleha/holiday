@@ -5,6 +5,7 @@ namespace Aqualeha\AppBundle\Controller;
 use Aqualeha\AppBundle\Entity\Country;
 use Aqualeha\AppBundle\Entity\Document;
 use Aqualeha\AppBundle\Entity\Holiday;
+use Aqualeha\AppBundle\Form\DataTransformer\DateTimeTransformer;
 use Aqualeha\AppBundle\Services\HolidayManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -32,7 +33,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array('name' => "aqualeha");
+        return array('name' => 'aqualeha');
     }
 
     /**
@@ -49,7 +50,7 @@ class DefaultController extends Controller
     {
         $document = new Document();
 
-        $form = $this->createFormBuilder($document)->add('file', 'Symfony\Component\Form\Extension\Core\Type\FileType', array('label' => 'Importer un calendrier (ICS file)'))->getForm();
+        $form = $this->createFormBuilder($document)->add('file', 'Symfony\Component\Form\Extension\Core\Type\FileType', array('label' => 'Import a calendrier (ICS file) -> '))->getForm();
 
         $form->handleRequest($request);
 
@@ -118,10 +119,35 @@ class DefaultController extends Controller
      * @Method("get")
      * @Template("AqualehaAppBundle:Default:date.html.twig")
      */
-    public function checkHolidayMoreAction($country, $date, $nbDay)
+    public function checkHolidayAction($country, $date, $nbDay)
     {
         return array(
             'date' => $this->getHolidayManager()->checkDate($date, $nbDay, $country)->getTimestamp()
+        );
+    }
+
+    /**
+     * Check if the day is a Holiday and return a boolean.
+     * We can add a number of day in addition like /isHoliday/FRA/20160429/6 -> 1 (true)
+     *
+     * @param string  $country
+     * @param string  $date
+     * @param integer $nbDay
+     *
+     * @return array
+     *
+     * @Route("/isHoliday/{country}/{date}/{nbDay}", name="aqueleha_isHoliday", defaults={"nbDay" = 0})
+     * @Method("get")
+     * @Template("AqualehaAppBundle:Default:date.html.twig")
+     */
+    public function isHolidayAction($country, $date, $nbDay)
+    {
+        $dateTimeTransformer = new DateTimeTransformer();
+        $dateTime = $dateTimeTransformer->reverseTransform($date);
+        $dateTime->modify('+'.$nbDay.' days');
+
+        return array(
+            'date' => $this->getHolidayManager()->isHoliday($dateTimeTransformer->transform($dateTime), $country)
         );
     }
 }

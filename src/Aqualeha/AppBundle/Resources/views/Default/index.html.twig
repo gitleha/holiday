@@ -1,7 +1,39 @@
-<h1>Hello !</h1>
+<div style="border: 2px double #000000; padding-left: 25px; background-color: steelblue; font-family: 'Courier New', Courier, monospace"">
+    <h1 style="text-align: center; padding-right: 25px">Holidays</h1>
 
-<h1>Fill Database</h1>
+    <h3>Fill database</h3>
+    <ul>
+        <li>
+            Check on <b><a href="http://holidays.kayaposoft.com/public_holidays.php">Kayaposoft</a></b> or <b><a href="https://www.mozilla.org/en-US/projects/calendar/holidays/">Mozilla</a></b> to get ics calendar
+        </li>
+        </br>
+        <li>
+            Check if the calendar name is a CIO code.ics like FRA.ics
+        </li>
+        </br>
+        <li>
+            <a href="{{ path('aqueleha_new') }}">
+                Add holidays
+            </a> with ics calendar
+        </li>
+        </br>
 
-<a href="{{ path('aqueleha_new') }}">
-    Add holidays
-</a>
+    </ul>
+    <h3>Function date</h3>
+    <ul>
+        <li>
+            CheckHoliday : Check if the day is a Holiday and return a new date (timestamp). </br>
+            We can follow the link like <a href="/app_dev.php/checkHoliday/FRA/20160505">/checkHoliday/FRA/20160505</a> -> 20160506->getTimestamp()
+        </li>
+        </br>
+        <li>
+            IsHoliday : Check if the day is a Holiday and return a boolean. We can follow the link like <a href="/app_dev.php/isHoliday/FRA/20160505">/isHoliday/FRA/20160505</a> -> 1 (true)
+        </li>
+        </br>
+        <li>
+            We can add a number of day in addition like <a href="/app_dev.php/checkHoliday/FRA/20160505/2">/checkHoliday/FRA/20160505/2</a> -> 20160509->getTimestamp()
+        </li>
+        </br>
+    </ul>
+</div>
+

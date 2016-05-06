@@ -92,7 +92,7 @@ class HolidayManager
      *
      * @return bool
      */
-    private function isHoliday($date, $country)
+    public function isHoliday($date, $country)
     {
         $country = $this->em->getRepository('AqualehaAppBundle:Country')->findOneByName($country);
         $holiday = $this->em->getRepository('AqualehaAppBundle:Holiday')->findBy(

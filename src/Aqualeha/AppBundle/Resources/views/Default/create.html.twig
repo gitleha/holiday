@@ -1,16 +1,15 @@
-<h1>Holiday creation</h1>
+<div style="border: 2px double #000000; padding-left: 25px;background-color: steelblue; font-family: 'Courier New', Courier, monospace">
+    <h1 style="text-align: center">Holiday creation</h1>
+    <form action="{{ path('aqueleha_new') }}" method="post" ENCTYPE="multipart/form-data">
+        {{ form_widget(form) }}
+        <p>
 
-<form action="{{ path('aqueleha_new') }}" method="post" ENCTYPE="multipart/form-data">
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('aqueleha_home') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+        </p>
+        <ul class="record_actions">
+            <li>
+                <button type="submit">Create</button>
+                <input type="button" OnClick="window.location.href={{ path('aqueleha_home') }}" value="Back to the list" />
+            </li>
+        </ul>
+    </form>
+</div>

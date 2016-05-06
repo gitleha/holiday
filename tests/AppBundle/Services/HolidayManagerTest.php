@@ -25,7 +25,7 @@ class HolidayManagerTest extends WebTestCase {
      *
      * @group check
      */
-    public function testCheckHolidayMoreAction()
+    public function testCheckHolidayAction()
     {
         $country = new Country();
         $countryRepository = Phake::mock('\Doctrine\ORM\EntityRepository');
@@ -49,5 +49,36 @@ class HolidayManagerTest extends WebTestCase {
         $holidayManager = new HolidayManager($em);
 
         $this->assertEquals(1462312800, $holidayManager->checkDate('20160429', 4, 'FRA')->getTimestamp());
+    }
+
+    /**
+     * @see \Aqualeha\AppBundle\Services\HolidayManager::isHoliday()
+     *
+     * @group is
+     */
+    public function testIsHolidayAction()
+    {
+        $country = new Country();
+        $countryRepository = Phake::mock('\Doctrine\ORM\EntityRepository');
+        Phake::when($countryRepository)->findOneByName(Phake::anyParameters())->thenReturn($country);
+
+        $holiday = new Holiday();
+        $holidayRepository = Phake::mock('\Doctrine\ORM\EntityRepository');
+        Phake::when($holidayRepository)->findBy(array(
+            'date'    => "20160503",
+            'country' => $country
+        ))->thenReturn(null);
+        Phake::when($holidayRepository)->findBy(array(
+            'date'    => "20160505",
+            'country' => $country->getId()
+        ))->thenReturn($holiday);
+        $em = Phake::mock('\Doctrine\ORM\EntityManager');
+        Phake::when($em)->getRepository('AqualehaAppBundle:Country')->thenReturn($countryRepository);
+        Phake::when($em)->getRepository('AqualehaAppBundle:Holiday')->thenReturn($holidayRepository);
+
+       // $repositoryMock = $this->getMockBuilder('\Doctrine\ORM\EntityRepository')->getMock();
+        $holidayManager = new HolidayManager($em);
+
+        $this->assertEquals(1, $holidayManager->isHoliday('20160505', 'FRA'));
     }
 }
