@@ -13,3 +13,14 @@
         </ul>
     </form>
 </div>
+</br>
+<div style="border: 2px double #000000; padding-left: 25px;background-color: steelblue; font-family: 'Courier New', Courier, monospace">
+    <h3>Liste of countries</h3>
+    <ul class="record_actions">
+        {% for key,value in countries %}
+            <li>
+                {{ value.name }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

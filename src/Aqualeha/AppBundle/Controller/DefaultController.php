@@ -51,8 +51,9 @@ class DefaultController extends Controller
         $document = new Document();
 
         $form = $this->createFormBuilder($document)->add('file', 'Symfony\Component\Form\Extension\Core\Type\FileType', array('label' => 'Import a calendrier (ICS file) -> '))->getForm();
-
         $form->handleRequest($request);
+
+        $data = $this->getDoctrine()->getRepository('AqualehaAppBundle:Country')->findAll();
 
         //if the form is valid and le file type is calendar otherwise send a form
         if ($form->isValid() and $document->getFile()->getMimeType()=="text/calendar") {
@@ -89,11 +90,12 @@ class DefaultController extends Controller
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('aqueleha_home', array('id' => $holiday->getId())));
+            return $this->redirect($this->generateUrl('aqueleha_new'));
         }
 
         return array(
-            'form'   => $form->createView()
+            'form'      => $form->createView(),
+            'countries' => $data
         );
     }
 

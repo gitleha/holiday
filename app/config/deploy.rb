@@ -1,6 +1,7 @@
 set :stages,        %w(production)
 set :default_stage, "production"
 set :stage_dir,     "app/config"
+
 require 'capistrano/ext/multistage'
 
 set :deploy_to,   "/var/www/html/holidays"
