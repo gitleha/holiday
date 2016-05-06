@@ -1,4 +1,5 @@
 /app/config/parameters.yml
+/app/config/production.rb
 /build/
 /phpunit.xml
 /var/*

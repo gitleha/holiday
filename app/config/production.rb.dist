@@ -1,0 +1,7 @@
+set :branch, "master"
+set :application, "holidays"
+set :deploy_to,   "/var/www/html/holidays"
+
+server 'ip', :app, :web, :primary => true
+server 'ip', :app, :web
+ssh_options[:port] = "port"
