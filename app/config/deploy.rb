@@ -1,6 +1,7 @@
-set :stages,        %w(production)
-set :default_stage, "production"
-set :stage_dir,     "app/config"
+set :stages,               %w(production)
+set :default_stage,        "production"
+set :stage_dir,            "app/config"
+set :symfony_console_path, "bin/console"
 
 require 'capistrano/ext/multistage'
 
