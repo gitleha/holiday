@@ -26,7 +26,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="aqueleha_home")
+     * @Route("/", name="aqualeha_home")
      * @Template("AqualehaAppBundle:Default:index.html.twig")
      *
      * @return array
@@ -43,7 +43,7 @@ class DefaultController extends Controller
      *
      * @return array
      *
-     * @Route("/new", name="aqueleha_new")
+     * @Route("/new", name="aqualeha_new")
      * @Template("AqualehaAppBundle:Default:create.html.twig")
      */
     public function newAction(Request $request)
