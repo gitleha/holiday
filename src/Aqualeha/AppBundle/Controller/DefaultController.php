@@ -90,7 +90,7 @@ class DefaultController extends Controller
 
             $em->flush();
 
-            return $this->redirect($this->generateUrl('aqueleha_new'));
+            return $this->redirect($this->generateUrl('aqualeha_new'));
         }
 
         return array(
@@ -117,7 +117,7 @@ class DefaultController extends Controller
      *
      * @return array
      *
-     * @Route("/checkHoliday/{country}/{date}/{nbDay}", name="aqueleha_checkHolidayMore", defaults={"nbDay" = 0})
+     * @Route("/checkHoliday/{country}/{date}/{nbDay}", name="aqualeha_checkHolidayMore", defaults={"nbDay" = 0})
      * @Method("get")
      * @Template("AqualehaAppBundle:Default:date.html.twig")
      */
@@ -138,7 +138,7 @@ class DefaultController extends Controller
      *
      * @return array
      *
-     * @Route("/isHoliday/{country}/{date}/{nbDay}", name="aqueleha_isHoliday", defaults={"nbDay" = 0})
+     * @Route("/isHoliday/{country}/{date}/{nbDay}", name="aqualeha_isHoliday", defaults={"nbDay" = 0})
      * @Method("get")
      * @Template("AqualehaAppBundle:Default:date.html.twig")
      */
