@@ -26,17 +26,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="aqualeha_index")
-     *
-     * @return array
-     */
-    public function indexRedirectAction()
-    {
-        return $this->redirect($this->generateUrl('aqualeha_home'));
-    }
-
-    /**
-     * @Route("/home", name="aqualeha_home")
+     * @Route("/", name="aqualeha_home")
      * @Template("AqualehaAppBundle:Default:index.html.twig")
      *
      * @return array
