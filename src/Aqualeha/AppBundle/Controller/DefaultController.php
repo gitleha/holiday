@@ -44,7 +44,7 @@ class DefaultController extends Controller
      * @return array
      *
      * @Route("/new", name="aqualeha_new")
-     * @Method("get")
+     * @Method({"GET", "POST"})
      * @Template("AqualehaAppBundle:Default:create.html.twig")
      */
     public function newAction(Request $request)
