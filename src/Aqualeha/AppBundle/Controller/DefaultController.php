@@ -124,8 +124,10 @@ class DefaultController extends Controller
      */
     public function checkHolidayAction($country, $date, $nbDay)
     {
+        //date_default_timezone_set('UTC');
+
         return array(
-            'date' => $this->getHolidayManager()->checkDate($date, $nbDay, $country)->getTimestamp()
+            'date' => $this->getHolidayManager()->checkDate($date, $nbDay, $country)->format("Y-m-d")
         );
     }
 

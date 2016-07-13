@@ -59,11 +59,13 @@ class HolidayManager
         $dateTimeTransformer = new DateTimeTransformer();
         $dateTime = $dateTimeTransformer->reverseTransform($day);
 
-        $dateTime->modify('+'.$nbDay.' days');
+        for ($i = 0; $i < $nbDay; $i++) {
+            $dateTime->modify('+1 days');
 
-        while ($this->isWeekEnd($dateTime) or $this->isHoliday($dateTimeTransformer->transform($dateTime), $country)) :
-            $dateTime->modify('+1 day');
-        endwhile;
+            while ($this->isWeekEnd($dateTime) or $this->isHoliday($dateTimeTransformer->transform($dateTime), $country)) {
+                $dateTime->modify('+1 days');
+            }
+        }
 
         return $dateTime;
     }
