@@ -48,7 +48,7 @@ class HolidayManagerTest extends WebTestCase {
        // $repositoryMock = $this->getMockBuilder('\Doctrine\ORM\EntityRepository')->getMock();
         $holidayManager = new HolidayManager($em);
 
-        $this->assertEquals(1462312800, $holidayManager->checkDate('20160429', 4, 'FRA')->getTimestamp());
+        $this->assertEquals(1462485600, $holidayManager->checkDate('20160429', 4, 'FRA')->getTimestamp());
     }
 
     /**
