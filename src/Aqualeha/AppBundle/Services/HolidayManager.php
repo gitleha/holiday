@@ -67,6 +67,12 @@ class HolidayManager
             }
         }
 
+        if (($this->isWeekEnd($dateTime) or $this->isHoliday($dateTimeTransformer->transform($dateTime), $country)) && $nbDay == 0) {
+            while ($this->isWeekEnd($dateTime) or $this->isHoliday($dateTimeTransformer->transform($dateTime), $country)) {
+                $dateTime->modify('+1 days');
+            }
+        }
+
         return $dateTime;
     }
 
