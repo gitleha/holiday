@@ -1,5 +1,10 @@
 /app/config/parameters.yml
 /app/config/production.rb
+/app/cache/*
+/app/log/*
+/app/Gemfile.lock
+/app/vendor/*
+/app/config/log/*
 /build/
 /phpunit.xml
 /var/*

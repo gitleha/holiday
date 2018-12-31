@@ -1,67 +1,64 @@
-set :symfony_env,          "production"
-set :stages,               %w{production}
-set :default_stage,        "production"
-set :stage_dir,            "app/config"
+# config valid only for current version of Capistrano
+lock "3.10.1"
 
-require 'capistrano/ext/multistage'
+set :application, "holiday"
+set :repo_url, "git@github.com:gitleha/holiday.git"
 
-set :deploy_to,   "/var/www/html/holidays"
-set :application, "holidays"
+# To make safe to deploy to same server
+set :tmp_dir, "/tmp/MDP"
 
-# symfony-standard edition directories
-set :app_path, "app"
-set :web_path, "web"
-set :var_path, "var"
-set :bin_path, "bin"
+# Default branch is :master
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
-# The next 3 settings are lazily evaluated from the above values, so take care
-# when modifying them
-set :app_config_path, "app/config"
-set :log_path, "var/logs"
-set :cache_path, "var/cache"
+# Default deploy_to directory is /var/www/holiday
+set :deploy_to, '/var/www/html/holiday'
 
-set :symfony_console_path, "bin/console"
-set :symfony_console_flags, "--no-debug"
+# Default value for :scm is :git
+# set :scm, :git
 
-set :repository, "git@github.com:gitleha/holiday.git"
-set :scm, :git
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `subversion`, `mercurial`, `perforce`, or `none`
-set :deploy_via, :copy
+# Default value for :format is :airbrussh.
+# set :format, :airbrussh
 
-set :model_manager, "doctrine"
-# Or: `propel`
+# You can configure the Airbrussh format using :format_options.
+# These are the defaults.
+# set :format_options, command_output: true, log_file: 'log/capistrano.log', color: :auto, truncate: :auto
 
+# Default value for :pty is false
+# set :pty, true
 
-# Remove app_dev.php during deployment, other files in web/ can be specified here
-set :controllers_to_clear, ["app_*.php"]
+# Default value for :linked_files is []
+set :linked_files, fetch(:linked_files, []).push('app/config/parameters.yml')
 
-# asset management
-set :assets_install_path, "web"
-set :assets_install_flags,  '--symlink'
+# Default value for linked_dirs is []
+set :linked_dirs, fetch(:linked_dirs, []).push('var')
 
-# Share files/directories between releases
-set :linked_files, []
-set :linked_dirs, ["var/logs"]
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-# Set correct permissions between releases, this is turned off by default
-set :file_permissions_paths, ["var"]
-set :permission_method, false
+# set :keep_releases, 3
 
-set :keep_releases, 3
-set :shared_files, ["app/config/parameters.yml"]
-set :writable_dirs, ["var/cache", "var/logs"]
-set :webserver_user, "apache"
-set :permission_method, :acl
-set :use_set_permissions, true
+after 'deploy:starting', 'composer:install_executable'
+after 'deploy:updated', 'symfony:assets:install'
+after 'deploy:updated', 'deploy:migrate'
 
-set :use_sudo, false
-set :user, "root"
-set :use_composer, true
-# Be more verbose by uncommenting the following line
-logger.level = Logger::MAX_LEVEL
+namespace :deploy do
 
-after "deploy" do
-	run "cd #{current_path} && php bin/console assetic:dump --env=prod"
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
+  end
+
 end
 
-after "deploy", "deploy:cleanup"
+# Run migrations after code is deployed (but not switched yet)
+namespace :deploy do
+  task :migrate do
+    on roles(:db) do
+      symfony_console('doctrine:migrations:migrate', '--no-interaction')
+    end
+  end
+end
