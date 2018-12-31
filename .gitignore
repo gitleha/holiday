@@ -1,5 +1,6 @@
 /app/config/parameters.yml
 /app/config/production.rb
+/app/config/recette.rb
 /app/cache/*
 /app/log/*
 /app/Gemfile.lock
