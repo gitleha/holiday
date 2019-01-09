@@ -3,7 +3,8 @@ set :branch, "master"
 set :application, "holidays"
 set :deploy_to,   "/var/www/html/holidays"
 
-server '172.16.0.62', :app, :web, :primary => true
-server '172.16.0.72', :app, :web
+server 'oweb01:22', user: 'root'
+server 'oweb02:22', user: 'root'
+server 'oweb03:22', user: 'root'
+server 'oweb04:22', user: 'root'
 
-ssh_options[:port] = "22000"
