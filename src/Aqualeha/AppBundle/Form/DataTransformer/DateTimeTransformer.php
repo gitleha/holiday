@@ -23,7 +23,7 @@ class DateTimeTransformer implements DataTransformerInterface
     /**
      * tranform function
      *
-     * @param array $date
+     * @param \DateTime $date
      *
      * @return string
      */
@@ -45,7 +45,7 @@ class DateTimeTransformer implements DataTransformerInterface
      *
      * @param string $chain
      *
-     * @return array
+     * @return \DateTime
      */
     public function reverseTransform($chain)
     {

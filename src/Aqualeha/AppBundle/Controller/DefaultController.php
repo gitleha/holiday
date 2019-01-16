@@ -17,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class DefaultController
@@ -41,7 +42,7 @@ class DefaultController extends Controller
      *
      * @param Request $request
      *
-     * @return array
+     * @return Response
      *
      * @Route("/new", name="aqualeha_new")
      * @Method({"POST", "GET"})

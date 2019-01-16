@@ -9,14 +9,7 @@
 namespace Aqualeha\AppBundle\Services;
 
 use Aqualeha\AppBundle\Form\DataTransformer\DateTimeTransformer;
-use DateTime;
-use Aqualeha\AppBundle\Entity\Country;
-use Aqualeha\AppBundle\Entity\Holiday;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityManager;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * Class HolidayManager
@@ -31,18 +24,11 @@ class HolidayManager
     protected $em;
 
     /**
-     * @var null|SecurityContext
-     */
-    protected $security;
-
-    /**
      * @param EntityManager     $em
-     * @param SecurityContext   $security
      */
-    public function __construct($em, $security = null)
+    public function __construct($em)
     {
         $this->em = $em;
-        $this->security = $security;
     }
 
     /**
