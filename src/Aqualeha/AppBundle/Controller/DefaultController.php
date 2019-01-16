@@ -115,6 +115,7 @@ class DefaultController extends Controller
      * @param string  $country
      * @param string  $date
      * @param integer $nbDay
+     * @param Request $request
      *
      * @return array
      *
@@ -122,12 +123,18 @@ class DefaultController extends Controller
      * @Method("get")
      * @Template("AqualehaAppBundle:Default:date.html.twig")
      */
-    public function checkHolidayAction($country, $date, $nbDay)
+    public function checkHolidayAction($country, $date, $nbDay, Request $request)
     {
         //date_default_timezone_set('UTC');
 
+        $operator = '+';
+
+        if ($request->query->has('operator')) {
+            $operator = $request->query->get('operator');
+        }
+
         return array(
-            'date' => $this->getHolidayManager()->checkDate($date, $nbDay, $country)->getTimestamp()
+            'date' => $this->getHolidayManager()->checkDate($date, $nbDay, $country, $operator)->getTimestamp()
         );
     }
 

@@ -51,25 +51,32 @@ class HolidayManager
      * @param string  $day
      * @param integer $nbDay
      * @param string  $country
+     * @param string  $operator
      *
-     * @return array
+     * @return \DateTime
      */
-    public function checkDate($day, $nbDay, $country)
+    public function checkDate($day, $nbDay, $country, $operator='+')
     {
+        $allowedOperators = array('-','+');
+
+        if(!in_array($operator,$allowedOperators)){
+            $operator = '+';
+        }
+
         $dateTimeTransformer = new DateTimeTransformer();
         $dateTime = $dateTimeTransformer->reverseTransform($day);
 
         for ($i = 0; $i < $nbDay; $i++) {
-            $dateTime->modify('+1 days');
+            $dateTime->modify($operator . '1 days');
 
             while ($this->isWeekEnd($dateTime) or $this->isHoliday($dateTimeTransformer->transform($dateTime), $country)) {
-                $dateTime->modify('+1 days');
+                $dateTime->modify($operator . '1 days');
             }
         }
 
         if (($this->isWeekEnd($dateTime) or $this->isHoliday($dateTimeTransformer->transform($dateTime), $country)) && $nbDay == 0) {
             while ($this->isWeekEnd($dateTime) or $this->isHoliday($dateTimeTransformer->transform($dateTime), $country)) {
-                $dateTime->modify('+1 days');
+                $dateTime->modify($operator . '1 days');
             }
         }
 
@@ -79,7 +86,7 @@ class HolidayManager
     /**
      * Function who check if the date is a week end day
      *
-     * @param array $date
+     * @param \DateTime $date
      *
      * @return bool
      */
