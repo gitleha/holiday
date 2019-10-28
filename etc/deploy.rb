@@ -8,3 +8,4 @@ set :file_permissions_paths, ["var/log", "var/cache"]
 set :file_permissions_users, ["apache"]
 
 before "deploy:updated", "deploy:set_permissions:acl"
+default_run_options[:pty] = true
