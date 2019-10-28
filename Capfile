@@ -1,3 +1,7 @@
+# Configure required variables for Symfony2 deployment
+set :deploy_config_path, 'etc/capistrano/deploy.rb'
+set :stage_config_path,  'etc/capistrano/deploy'
+
 # Load DSL and set up stages
 require "capistrano/setup"
 
@@ -8,6 +12,3 @@ require 'capistrano/composer'
 require 'capistrano/symfony'
 require 'capistrano/file-permissions'
 require 'capistrano/symfony-doctrine'
-
-# Load custom tasks from `lib/capistrano/tasks` if you have any defined
-Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
