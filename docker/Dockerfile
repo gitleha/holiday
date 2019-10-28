@@ -20,6 +20,16 @@ RUN	apk update && \
 
 RUN gem install bundler -v '1.16.1'
 
+# Install Apache2
+RUN apk add apache2 libxml2-dev apache2-utils php7-apache2 openssh-client && \
+    mkdir /web/ && chown -R apache.www-data /web && \
+    sed -i 's/^#ServerName.*/ServerName naviguea.test/' /etc/apache2/httpd.conf && \
+    sed -i "s#^DocumentRoot \".*#DocumentRoot \"/web\"#g" /etc/apache2/httpd.conf && \
+    printf "\n<Directory \"/web\">\n\tOrder Allow,Deny\n\tAllow from All\n\tRequire all granted\n\tFallbackResource /app_behat.php\n</Directory>\n" >> /etc/apache2/httpd.conf && \
+#    mkdir /run/apache2 && \
+    rm -rf /var/cache/apk/*
+
+
 # Install Composer
 RUN composer --version
 # Set timezone
