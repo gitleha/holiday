@@ -12,3 +12,7 @@ require 'capistrano/composer'
 require 'capistrano/symfony'
 require 'capistrano/file-permissions'
 require 'capistrano/symfony-doctrine'
+
+require "capistrano/scm/git"
+
+install_plugin Capistrano::SCM::Git

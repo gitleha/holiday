@@ -3,7 +3,7 @@ set :application, "holiday"
 set :repo_url, "git@github.com:gitleha/holiday.git"
 
 # To make safe to deploy to same server
-set :tmp_dir, "/tmp/MDP"
+# set :tmp_dir, "/tmp/MDP"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
