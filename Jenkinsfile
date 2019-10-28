@@ -14,7 +14,7 @@ pipeline {
         }
         stage ('deploy') {
             steps {
-                sh 'cd app && eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa && bundle install && bundle exec cap recette deploy'
+                sh 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa && bundle install && bundle exec cap recette deploy'
             }
         }
    }
