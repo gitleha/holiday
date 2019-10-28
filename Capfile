@@ -1,6 +1,6 @@
 # Configure required variables for Symfony2 deployment
-set :deploy_config_path, 'etc/capistrano/deploy.rb'
-set :stage_config_path,  'etc/capistrano/deploy'
+set :deploy_config_path, 'etc/deploy.rb'
+set :stage_config_path,  'etc/deploy'
 
 # Load DSL and set up stages
 require "capistrano/setup"
