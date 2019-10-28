@@ -10,16 +10,6 @@ pipeline {
         stage('build') {
             steps {
                 checkout scm
-                sh "ln -s ${env.workspace}/web /web"
-                sh 'mkdir -p var'
-                sh 'composer install'
-                sh 'yarn install'
-                sh 'chown -R apache:apache var'
-            }
-        }
-        stage ('deploy-doc') {
-            steps {
-                sh 'cd docs && sphinx-build-3 -b html . build'
             }
         }
         stage ('deploy') {
