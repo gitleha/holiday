@@ -9,4 +9,4 @@ set :file_permissions_users, ["apache"]
 
 before "deploy:updated", "deploy:set_permissions:acl"
 set :pty, true
-append :linked_files, %w{app/config/parameters.yml}
+append :linked_files, "app/config/parameters.yml"
