@@ -1,8 +1,5 @@
 # Gemfile
 source 'https://rubygems.org'
- 
-gem 'capistrano',  '3.10.1  '
-gem 'capistrano-symfony', '~> 1.0.0.rc1'
-gem 'capistrano-composer'
-gem 'capistrano-file-permissions'
-gem 'capistrano-symfony-doctrine'
+gem 'capistrano',  '~> 3.11'
+gem 'capistrano-symfony', '~> 2.0.0.pre.alfa2'
+gem 'capistrano-file-permissions', :git => 'git://github.com/capistrano/file-permissions.git', :branch => 'master'
