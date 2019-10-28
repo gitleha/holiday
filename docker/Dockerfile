@@ -1,4 +1,4 @@
-# dockerfile kronos
+# dockerfile holiday
 FROM php:7.2-alpine
 ARG WORKSPACE
 
@@ -27,7 +27,7 @@ RUN composer --version
 RUN ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
 RUN "date"
 
-RUN docker-php-ext-install zip pdo_mysql curl gd
+#RUN docker-php-ext-install zip pdo_mysql curl gd
 
 RUN apk del curl openssl libpng libpng-dev curl-dev
 
@@ -43,5 +43,4 @@ RUN mkdir /root/.ssh && \
 ADD start.sh /bootstrap/
 RUN chmod +x /bootstrap/start.sh
 
-EXPOSE 80
 ENTRYPOINT ["/bootstrap/start.sh"]
