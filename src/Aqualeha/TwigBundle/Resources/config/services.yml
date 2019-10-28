@@ -1,5 +1,5 @@
-services:
-    twig.extension.aqualehatwigext:
-        class: Aqualeha\TwigBundle\Twig\Extension\TwigExtension
-        tags:
-            - { name: twig.extension }
+#services:
+#    twig.extension.aqualehatwigext:
+#        class: Aqualeha\TwigBundle\Twig\Extension\TwigExtension
+#        tags:
+#            - { name: twig.extension }
