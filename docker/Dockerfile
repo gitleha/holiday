@@ -11,7 +11,7 @@ RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini && \
 RUN	apk update && \
 	apk upgrade && \
 	apk add --update git docker curl openssl php7-mysqli php7-dom php7-json php7-tokenizer php7-iconv php7-xmlwriter php7-curl && \
-	apk add --update php7-simplexml php7-session php7-pdo php7-pdo_mysql php7-mbstring php7-ldap php7-gd grep && \
+	apk add --update php7-simplexml php7-session php7-pdo php7-pdo_mysql php7-mbstring php7-gd grep && \
 	apk add --update libpng libpng-dev curl-dev && \
 	apk add --update ruby-full && \
 	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
@@ -27,9 +27,9 @@ RUN composer --version
 RUN ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
 RUN "date"
 
-RUN docker-php-ext-install zip pdo_mysql ldap curl gd
+RUN docker-php-ext-install zip pdo_mysql curl gd
 
-RUN apk del curl openssl libpng libpng-dev curl-dev openldap-dev
+RUN apk del curl openssl libpng libpng-dev curl-dev
 
 RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
 
