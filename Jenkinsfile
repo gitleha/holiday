@@ -14,6 +14,7 @@ pipeline {
         }
         stage ('deploy') {
             steps {
+            sh 'touch test && tail -f test'
                 sh 'eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa && bundle install && bundle exec cap recette deploy'
             }
         }
