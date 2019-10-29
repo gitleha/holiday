@@ -9,6 +9,7 @@
 namespace Aqualeha\AppBundle\Services;
 
 use Aqualeha\AppBundle\Form\DataTransformer\DateTimeTransformer;
+use Aqualeha\AppBundle\Repository\HolidayRepository;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -24,7 +25,7 @@ class HolidayManager
     protected $em;
 
     /**
-     * @param EntityManager     $em
+     * @param EntityManager $em
      */
     public function __construct($em)
     {
@@ -34,18 +35,18 @@ class HolidayManager
     /**
      * Check the date and update it if this one is a week end day or a holiday
      *
-     * @param string  $day
+     * @param string $day
      * @param integer $nbDay
-     * @param string  $country
-     * @param string  $operator
+     * @param string $country
+     * @param string $operator
      *
      * @return \DateTime
      */
-    public function checkDate($day, $nbDay, $country, $operator='+')
+    public function checkDate($day, $nbDay, $country, $operator = '+')
     {
-        $allowedOperators = array('-','+');
+        $allowedOperators = array('-', '+');
 
-        if(!in_array($operator,$allowedOperators)){
+        if (!in_array($operator, $allowedOperators)) {
             $operator = '+';
         }
 
@@ -98,7 +99,7 @@ class HolidayManager
         $country = $this->em->getRepository('AqualehaAppBundle:Country')->findOneByName($country);
         $holiday = $this->em->getRepository('AqualehaAppBundle:Holiday')->findBy(
             array(
-                'date'    => $date,
+                'date' => $date,
                 'country' => $country->getId()
             )
         );
@@ -108,5 +109,13 @@ class HolidayManager
         } else {
             return true;
         }
+    }
+
+    public function getHolidayOfYear($year)
+    {
+        /** @var HolidayRepository $holidayRepository */
+        $holidayRepository = $this->em->getRepository('AqualehaAppBundle:Holiday');
+
+        return $holidayRepository->findByYear($year);
     }
 }

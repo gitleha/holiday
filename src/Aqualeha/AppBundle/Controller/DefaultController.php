@@ -9,6 +9,7 @@ use Aqualeha\AppBundle\Form\DataTransformer\DateTimeTransformer;
 use Aqualeha\AppBundle\Services\HolidayManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -58,7 +59,7 @@ class DefaultController extends Controller
         $data = $this->getDoctrine()->getRepository('AqualehaAppBundle:Country')->findAll();
 
         //if the form is valid and le file type is calendar otherwise send a form
-        if ($form->isValid() and $document->getFile()->getMimeType()=="text/calendar") {
+        if ($form->isValid() and $document->getFile()->getMimeType() == "text/calendar") {
             $em = $this->getDoctrine()->getEntityManager();
 
             //new instance of the calfileparser
@@ -96,7 +97,7 @@ class DefaultController extends Controller
         }
 
         return array(
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
             'countries' => $data
         );
     }
@@ -113,8 +114,8 @@ class DefaultController extends Controller
      * Check if the day is a Holiday and give a new date.
      * We can add a number of day in addition like /checkHoliday/FRA/20160429/5 -> 20160504
      *
-     * @param string  $country
-     * @param string  $date
+     * @param string $country
+     * @param string $date
      * @param integer $nbDay
      * @param Request $request
      *
@@ -143,8 +144,8 @@ class DefaultController extends Controller
      * Check if the day is a Holiday and return a boolean.
      * We can add a number of day in addition like /isHoliday/FRA/20160429/6 -> 1 (true)
      *
-     * @param string  $country
-     * @param string  $date
+     * @param string $country
+     * @param string $date
      * @param integer $nbDay
      *
      * @return array
@@ -157,10 +158,41 @@ class DefaultController extends Controller
     {
         $dateTimeTransformer = new DateTimeTransformer();
         $dateTime = $dateTimeTransformer->reverseTransform($date);
-        $dateTime->modify('+'.$nbDay.' days');
+        $dateTime->modify('+' . $nbDay . ' days');
 
         return array(
             'date' => $this->getHolidayManager()->isHoliday($dateTimeTransformer->transform($dateTime), $country)
         );
+    }
+
+    /**
+     * Get holidays of a specific year
+     *
+     * @param integer $year
+     *
+     * @return JsonResponse
+     *
+     * @Route("/holidays/{year}", name="aqualeha_get_year_holidays")
+     * @Method("get")
+     * @throws \Exception
+     */
+    public function getHolidaysByYear($year = null)
+    {
+        if (null === $year) {
+            $year = (new \Datetime())->format('Y');
+        }
+
+        $holidays = $this->getHolidayManager()->getHolidayOfYear($year);
+        $res = [];
+
+        /** @var Holiday $holiday */
+        foreach($holidays as $holiday){
+            $res[] = [
+                'date' => $holiday->getDate(),
+//                'name' => $holiday->getName()
+            ];
+        }
+
+        return new JsonResponse($res);
     }
 }

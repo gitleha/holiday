@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Aqualeha\AppBundle\Entity\Holiday
  *
  * @ORM\Table(name="t_holiday")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Aqualeha\AppBundle\Repository\HolidayRepository")
  * @package Aqualeha\AppBundle\Entity
  */
 class Holiday
