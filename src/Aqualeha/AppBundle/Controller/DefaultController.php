@@ -126,8 +126,6 @@ class DefaultController extends Controller
      */
     public function checkHolidayAction($country, $date, $nbDay, Request $request)
     {
-        //date_default_timezone_set('UTC');
-
         $operator = '+';
 
         if ($request->query->has('operator')) {
