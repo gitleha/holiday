@@ -10,6 +10,7 @@ pipeline {
         stage('build') {
             steps {
                 checkout scm
+                sh 'git config --global --add safe.directory "$WORKSPACE"'
                 sh 'mkdir -p var'
                 sh 'composer install --no-scripts'
                 sh 'yarn install'
