@@ -9,5 +9,6 @@ set :file_permissions_users, ["www-data"]
 
 before "deploy:updated", "deploy:set_permissions:acl"
 set :pty, true
-append :linked_files, "app/config/parameters.yml"
-append :linked_dirs, ["var/logs"]
+
+set :linked_files, fetch(:linked_files, []).push('app/config/parameters.yml')
+set :linked_dirs, fetch(:linked_dirs, []).push('var/logs')
