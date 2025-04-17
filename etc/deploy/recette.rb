@@ -1,10 +1,8 @@
-# server-based syntax
-# ======================
-# Defines a single server with a list of roles and multiple properties.
-# You can define all roles on a single server, or split them:
-
 server 'rotools:22', user: 'root'
 
 set :stage, :recette
 set :branch, "dev"
+set :deploy_to,   "/var/www/html/holiday"
+set :application, "holiday"
 set :symfony_env, "prod"
+
