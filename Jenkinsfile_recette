@@ -10,7 +10,12 @@ pipeline {
         stage('build') {
             steps {
                 checkout scm
+                // Ajoute le chemin comme safe.directory pour Git
                 sh 'git config --global --add safe.directory "$WORKSPACE"'
+
+                // Forcer Composer à revenir à la version 1
+                sh 'composer self-update --1'
+                
                 sh 'mkdir -p var'
                 sh 'composer install --no-scripts'
                 sh 'yarn install'
