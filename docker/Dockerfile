@@ -14,7 +14,7 @@ RUN	apk update && \
 	apk add --update php7-simplexml php7-session php7-pdo php7-pdo_mysql php7-mbstring php7-ldap php7-gd grep && \
 	apk add --update libpng libzip-dev libpng-dev curl-dev openldap-dev && \
 	apk add --update openssh-client ruby-full nodejs yarn && \
-	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+	curl -sS https://getcomposer.org/download/2.2.21/composer.phar -o /usr/local/bin/composer && \
 	chmod +x /usr/local/bin/composer && \
     rm -rf /var/cache/apk/*
 
