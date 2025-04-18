@@ -17,7 +17,7 @@ pipeline {
                 // sh 'composer self-update --1'
 
                 sh 'mkdir -p var'
-                sh 'composer install --no-scripts'
+                sh './composer.phar install --no-scripts'
                 sh 'yarn install'
             }
         }
