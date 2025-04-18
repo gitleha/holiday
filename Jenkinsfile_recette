@@ -18,9 +18,7 @@ pipeline {
 
 
                 sh 'mkdir -p var'
-                sh 'composer --version'
-                sh './composer.phar --version'
-                sh './composer.phar install --no-scripts'
+                sh 'composer.phar install --no-scripts'
                 sh 'yarn install'
             }
         }
